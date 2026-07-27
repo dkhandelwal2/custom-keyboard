@@ -1,0 +1,34 @@
+'use client';
+
+import styles from './LayoutToggle.module.css';
+import type { LayoutType } from './Keyboard';
+
+interface LayoutToggleProps {
+  layout: LayoutType;
+  onToggle: (layout: LayoutType) => void;
+}
+
+export function LayoutToggle({ layout, onToggle }: LayoutToggleProps) {
+  return (
+    <div className={styles.toggleWrapper} role="group" aria-label="Keyboard layout selector">
+      <p className={styles.keypadTitle}>Select keyboard type: </p>
+      <div className={styles.radioGroup}>
+        {(['qwerty', 'abcd', 'numeric'] as LayoutType[]).map((option) => (
+          <label key={option} className={[styles.radioLabel, layout === option ? styles.radioLabelActive : ''].join(' ')}>
+            <input
+              type="radio"
+              name="layout"
+              value={option}
+              checked={layout === option}
+              onChange={() => onToggle(option)}
+              className={styles.radioInput}
+            />
+            <span className={styles.radioText}>
+              {option === 'qwerty' ? 'QWERTY' : option === 'abcd' ? 'A–Z' : '123'}
+            </span>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+}
