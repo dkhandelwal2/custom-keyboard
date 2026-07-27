@@ -95,12 +95,12 @@ export function KeyboardApp() {
 
         {/* Indicator row */}
         {/* Caps/Shift indicators */}
-        {/* {(isCaps || isShifted || typedText.length > 0) && (
+        {(isCaps || isShifted || typedText.length > 0) && (
           <div className={styles.toggleRow}>
             <div className={styles.modifierContainer}>
               <div className={styles.modifierBadges}>
-                {isCaps && <span className={styles.badge}>CAPS</span>}
-                {isShifted && <span className={styles.badge}>SHIFT</span>}
+                {isCaps && <span className={styles.badge}>⇪ CAPS-LOCK ON</span>}
+                {isShifted && <span className={styles.badge}>⇧ SHIFT ON</span>}
               </div>
               {typedText.length > 0 && (
                 <button
@@ -114,7 +114,7 @@ export function KeyboardApp() {
               )}
             </div>
           </div>
-        )} */}
+        )}
 
         {/* Keyboard */}
         <div className={styles.keyboardWrapper}>
