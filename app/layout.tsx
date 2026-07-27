@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://custom-keyboard-lilac.vercel.app/'),
   title: 'KeyBoard3D — Interactive 3D Keyboard with Sound & Vibration',
   description:
     'A stunning 3D interactive keyboard with real-time sound synthesis, haptic vibration, QWERTY and A–Z layouts. Mobile-first design with premium animations.',
@@ -10,7 +11,14 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'KeyBoard3D — Interactive 3D Keyboard',
     description: 'Tap keys, hear sounds, feel vibration. A premium 3D keyboard experience.',
+    url: 'https://custom-keyboard-lilac.vercel.app/',
+    siteName: 'KeyBoard3D',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'KeyBoard3D — Interactive 3D Keyboard',
+    description: 'Tap keys, hear sounds, feel vibration. A premium 3D keyboard experience.',
   },
 };
 
