@@ -11,5 +11,8 @@ export default defineConfig({
   external: ['react', 'react-dom'], // Peer dependencies
   esbuildPlugins: [cssModulesPlugin()],
   minify: true,
+  esbuildOptions(options) {
+    options.jsx = 'automatic';
+  }
 });
 
