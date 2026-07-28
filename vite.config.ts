@@ -6,7 +6,7 @@ import { resolve } from 'path';
 export default defineConfig({
   plugins: [
     react(),
-    dts({ include: ['components'] }),
+    dts({ include: ['components', 'global.d.ts'] }),
   ],
   build: {
     lib: {
