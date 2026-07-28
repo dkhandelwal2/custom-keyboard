@@ -54,8 +54,8 @@ export default function MyKeyboardApp() {
 | `defaultValue` | `string` | `""` | Initial text value for **uncontrolled** usage. |
 | `onChange` | `(value: string) => void` | `undefined` | Callback fired whenever the text value changes. |
 | `onKeyPress` | `(key: string) => void` | `undefined` | Callback fired for every individual key press (including modifiers). |
-| `layout` | `LayoutType` | `undefined` | The current keyboard layout (`'abcd'`, `'qwerty'`, `'numeric'`). If provided, layout state is controlled. |
-| `defaultLayout` | `LayoutType` | `'abcd'` | Initial layout for uncontrolled usage. |
+| `layout` | `LayoutType` | `undefined` | The current keyboard layout (`'abcd'`, `'qwerty'`, `'numeric'`, `'hindi'`). If provided, layout state is controlled. |
+| `defaultLayout` | `LayoutType` | `'qwerty'` | Initial layout for uncontrolled usage. |
 | `onLayoutChange` | `(layout: LayoutType) => void`| `undefined` | Callback fired when the user switches the layout via the toggle buttons. |
 | `showDisplayScreen` | `boolean` | `true` | Whether to show the top display screen showing the typed text. |
 | `showLayoutToggle` | `boolean` | `true` | Whether to show the layout toggle buttons (ABC / QWERTY / 123). |

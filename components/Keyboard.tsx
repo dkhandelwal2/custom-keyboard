@@ -2,7 +2,7 @@
 
 import { Key } from './Key';
 import type { LayoutType, KeyboardProps } from './types';
-import { QWERTY_ROWS, ABCD_ROWS, NUMERIC_ROWS, ACCENT_KEYS, SHIFT_SYMBOLS } from './constants';
+import { QWERTY_ROWS, ABCD_ROWS, NUMERIC_ROWS, HINDI_ROWS, ACCENT_KEYS, SHIFT_SYMBOLS } from './constants';
 import styles from './Keyboard.module.css';
 
 // Keys that sit inline in the ABCD row 3 should use normal flex-1 width
@@ -29,7 +29,7 @@ function getKeyWidth(
 
 
 /** Compute the visible label for a key */
-function resolveDisplay(key: string, isUpperCase: boolean, isShifted: boolean = false): React.ReactNode {
+function resolveDisplay(key: string, isUpperCase: boolean, isShifted: boolean = false, layout?: LayoutType): React.ReactNode {
   const renderSpecial = (name: string, icon: string) => (
     <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', lineHeight: 1.1 }}>
       <span style={{ fontSize: '1.2em' }}>{icon}</span>
@@ -46,34 +46,51 @@ function resolveDisplay(key: string, isUpperCase: boolean, isShifted: boolean = 
     Space: renderSpecial('Space', '␣'),
   };
   if (specialMap[key]) return specialMap[key];
-  if (isShifted && SHIFT_SYMBOLS[key]) return SHIFT_SYMBOLS[key];
-  if (key.length === 1 && /[A-Z]/.test(key)) {
-    return isUpperCase ? key.toUpperCase() : key.toLowerCase();
+
+  let displayChar: React.ReactNode = key;
+  if (isShifted && SHIFT_SYMBOLS[key]) {
+    displayChar = SHIFT_SYMBOLS[key];
+  } else if (key.length === 1 && /[A-Z]/.test(key)) {
+    displayChar = isUpperCase ? key.toUpperCase() : key.toLowerCase();
   }
-  return key;
+
+  // Nudge logic for Hindi keys
+  if (layout === 'hindi' && !isShifted && SHIFT_SYMBOLS[key]) {
+    return (
+      <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
+        <span style={{ position: 'absolute', top: '2px', right: '2px', fontSize: '0.6em', opacity: 0.5 }}>
+          {SHIFT_SYMBOLS[key]}
+        </span>
+        <span>{displayChar}</span>
+      </span>
+    );
+  }
+
+  return displayChar;
 }
 
 export function Keyboard({ layout, isUpperCase, isCaps, isShifted, enableSound = true, onKeyPress, typedTextLength }: KeyboardProps) {
-  const rows = layout === 'qwerty' ? QWERTY_ROWS : (layout === 'abcd' ? ABCD_ROWS : NUMERIC_ROWS);
+  const rows = layout === 'qwerty' ? QWERTY_ROWS : (layout === 'abcd' ? ABCD_ROWS : (layout === 'hindi' ? HINDI_ROWS : NUMERIC_ROWS));
+  const isStandard = layout === 'qwerty' || layout === 'hindi';
 
   return (
     <div
       className={styles.keyboard}
       role="group"
-      aria-label={`${layout === 'qwerty' ? 'QWERTY' : 'A-Z'} Keyboard`}
+      aria-label={`${layout === 'qwerty' ? 'QWERTY' : (layout === 'hindi' ? 'Hindi' : 'A-Z')} Keyboard`}
     >
       {rows.map((row, rowIndex) => (
         <div key={rowIndex} className={styles.row}>
 
-          {/* ── QWERTY leading modifier keys ───────── */}
-          {layout === 'qwerty' && rowIndex === 1 && (
-            <Key label="Tab" displayLabel={resolveDisplay('Tab', isUpperCase)} rowIndex={rowIndex} width="wide" accent enableSound={enableSound} onKeyPress={onKeyPress} />
+          {/* ── Standard leading modifier keys (QWERTY & Hindi) ───────── */}
+          {isStandard && rowIndex === 1 && (
+            <Key label="Tab" displayLabel={resolveDisplay('Tab', isUpperCase, false, layout)} rowIndex={rowIndex} width="wide" accent enableSound={enableSound} onKeyPress={onKeyPress} />
           )}
-          {layout === 'qwerty' && rowIndex === 2 && (
-            <Key label="Caps" displayLabel={resolveDisplay('Caps', isUpperCase)} rowIndex={rowIndex} width="wide" accent isActive={isCaps} enableSound={enableSound} onKeyPress={onKeyPress} />
+          {isStandard && rowIndex === 2 && (
+            <Key label="Caps" displayLabel={resolveDisplay('Caps', isUpperCase, false, layout)} rowIndex={rowIndex} width="wide" accent isActive={isCaps} enableSound={enableSound} onKeyPress={onKeyPress} />
           )}
-          {layout === 'qwerty' && rowIndex === 3 && (
-            <Key label="Shift" displayLabel={resolveDisplay('Shift', isUpperCase)} rowIndex={rowIndex} width="wider" accent isActive={isShifted} enableSound={enableSound} onKeyPress={onKeyPress} />
+          {isStandard && rowIndex === 3 && (
+            <Key label="Shift" displayLabel={resolveDisplay('Shift', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent isActive={isShifted} enableSound={enableSound} onKeyPress={onKeyPress} />
           )}
 
           {/* ── Letter / inline keys ────────────────── */}
@@ -83,7 +100,7 @@ export function Keyboard({ layout, isUpperCase, isCaps, isShifted, enableSound =
               <Key
                 key={key}
                 label={actualLabel}
-                displayLabel={resolveDisplay(key, isUpperCase, isShifted)}
+                displayLabel={resolveDisplay(key, isUpperCase, isShifted, layout)}
                 rowIndex={rowIndex}
                 width={getKeyWidth(key, layout, rowIndex)}
                 accent={ACCENT_KEYS.has(key)}
@@ -98,29 +115,29 @@ export function Keyboard({ layout, isUpperCase, isCaps, isShifted, enableSound =
             );
           })}
 
-          {/* ── QWERTY trailing modifier keys ──────── */}
-          {layout === 'qwerty' && rowIndex === 1 && (
-            <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={typedTextLength === 0} />
+          {/* ── Standard trailing modifier keys (QWERTY & Hindi) ──────── */}
+          {isStandard && rowIndex === 1 && (
+            <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={typedTextLength === 0} />
           )}
-          {layout === 'qwerty' && rowIndex === 2 && (
-            <Key label="Enter" displayLabel={resolveDisplay('Enter', isUpperCase)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} />
+          {isStandard && rowIndex === 2 && (
+            <Key label="Enter" displayLabel={resolveDisplay('Enter', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} />
           )}
-          {layout === 'qwerty' && rowIndex === 3 && (
-            <Key label="Shift" displayLabel={resolveDisplay('Shift', isUpperCase)} rowIndex={rowIndex} width="wider" accent isActive={isShifted} enableSound={enableSound} onKeyPress={onKeyPress} />
+          {isStandard && rowIndex === 3 && (
+            <Key label="Shift" displayLabel={resolveDisplay('Shift', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent isActive={isShifted} enableSound={enableSound} onKeyPress={onKeyPress} />
           )}
         </div>
       ))}
 
       {/* ── Bottom row — common to all layouts ──── */}
       <div className={styles.row}>
-        {layout !== 'qwerty' && (
-          <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase)} rowIndex={rows.length} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={typedTextLength === 0} />
+        {!isStandard && (
+          <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase, false, layout)} rowIndex={rows.length} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={typedTextLength === 0} />
         )}
         {layout !== 'numeric' && (
-          <Key label="Space" displayLabel={resolveDisplay('Space', isUpperCase)} rowIndex={rows.length} width="widest" enableSound={enableSound} onKeyPress={onKeyPress} />
+          <Key label="Space" displayLabel={resolveDisplay('Space', isUpperCase, false, layout)} rowIndex={rows.length} width="widest" enableSound={enableSound} onKeyPress={onKeyPress} />
         )}
         {layout === 'abcd' && (
-          <Key label="Enter" displayLabel={resolveDisplay('Enter', isUpperCase)} rowIndex={rows.length} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} />
+          <Key label="Enter" displayLabel={resolveDisplay('Enter', isUpperCase, false, layout)} rowIndex={rows.length} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} />
         )}
       </div>
     </div>

@@ -308,6 +308,7 @@
   flex-shrink: 0;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  padding: 0px;
 }
 
 .soundToggleBtn:hover {

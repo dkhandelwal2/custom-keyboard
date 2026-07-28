@@ -14,7 +14,7 @@ export function Keyboard3D({
   onChange,
   onKeyPress,
   layout: controlledLayout,
-  defaultLayout = 'abcd',
+  defaultLayout = 'qwerty',
   onLayoutChange,
   showDisplayScreen = true,
   showLayoutToggle = true,

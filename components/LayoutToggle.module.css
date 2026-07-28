@@ -25,7 +25,7 @@
 
 @media (max-width: 320px) {
   .keypadTitle {
-    font-size: x-small;
+    font-size: 9px;
   }
 }
 
@@ -48,6 +48,7 @@
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   z-index: 1;
+  max-height: 24px;
 }
 
 .radioInput {

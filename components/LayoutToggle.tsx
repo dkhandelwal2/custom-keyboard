@@ -8,7 +8,7 @@ export function LayoutToggle({ layout, onToggle }: LayoutToggleProps) {
     <div className={styles.toggleWrapper} role="group" aria-label="Keyboard layout selector">
       <p className={styles.keypadTitle}>Select keyboard type: </p>
       <div className={styles.radioGroup}>
-        {(['qwerty', 'abcd', 'numeric'] as LayoutType[]).map((option) => (
+        {(['qwerty', 'abcd', 'numeric', 'hindi'] as LayoutType[]).map((option) => (
           <label key={option} className={[styles.radioLabel, layout === option ? styles.radioLabelActive : ''].join(' ')}>
             <input
               type="radio"
@@ -19,7 +19,7 @@ export function LayoutToggle({ layout, onToggle }: LayoutToggleProps) {
               className={styles.radioInput}
             />
             <span className={styles.radioText}>
-              {option === 'qwerty' ? 'QWERTY' : option === 'abcd' ? 'A–Z' : '123'}
+              {option === 'qwerty' ? 'QWERTY' : option === 'abcd' ? 'A–Z' : option === 'hindi' ? 'हिंदी' : '123'}
             </span>
           </label>
         ))}
