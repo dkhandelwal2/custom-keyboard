@@ -9,7 +9,7 @@ A stunning, interactive 3D keyboard component for React. Features real-time soun
 Install the package via npm:
 
 ```bash
-npm install keyboard3d
+npm install react-keyboard3d-dkhandelwal
 ```
 
 *Note: Since it's a React component, you'll need `react` and `react-dom` installed in your project.*
@@ -20,8 +20,8 @@ Import the component and its CSS file into your React/Next.js application.
 
 ```tsx
 import { useState } from 'react';
-import { Keyboard3D } from 'keyboard3d';
-import 'keyboard3d/dist/components/index.css'; // Important: Import the styles!
+import { Keyboard3D } from 'react-keyboard3d-dkhandelwal';
+import 'react-keyboard3d-dkhandelwal/dist/components/index.css'; // Important: Import the styles!
 
 export default function MyKeyboardApp() {
   const [text, setText] = useState('');
