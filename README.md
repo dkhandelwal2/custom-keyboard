@@ -26,7 +26,7 @@ Import the component and its CSS file into your React/Next.js application.
 ```tsx
 import { useState } from 'react';
 import { Keyboard3D } from 'react-keyboard3d-dkhandelwal';
-import 'react-keyboard3d-dkhandelwal/dist/components/index.css'; // Important: Import the styles!
+import 'react-keyboard3d-dkhandelwal/dist/index.css'; // Important: Import the styles!
 
 export default function MyKeyboardApp() {
   const [text, setText] = useState('');

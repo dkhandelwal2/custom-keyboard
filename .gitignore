@@ -21,3 +21,4 @@ next-env.d.ts
 
 # NPM Package Build Output
 /dist
+*.module.css.json
