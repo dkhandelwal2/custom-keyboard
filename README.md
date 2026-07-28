@@ -7,7 +7,9 @@ A stunning, interactive 3D keyboard component for React. Features real-time soun
 ## Live Demo
 
 Try it out in your browser instantly!
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/dkhandelwal2/custom-keyboard)
+<a href="https://stackblitz.com/github/dkhandelwal2/custom-keyboard" target="_blank">
+  <img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz" />
+</a>
 
 ## Installation
 
@@ -78,19 +80,15 @@ The `LayoutType` is exported from the package and supports the following literal
 
 ## Documentation
 
-For installation guide, and usage examples, visit the [Documentation](https://dkhandelwal2.github.io/custom-keyboard/)
+For installation guide, and usage examples, visit the <a href="https://github.com/dkhandelwal2/custom-keyboard" target="_blank">Documentation</a>
 
 ## Contributing
 
 Contributions are always welcome! If you have a great idea or spot a bug, feel free to open an issue or submit a pull request: 
 
-https://github.com/dkhandelwal2/custom-keyboard/issues
+<a href="https://github.com/dkhandelwal2/custom-keyboard/issues" target="_blank">https://github.com/dkhandelwal2/custom-keyboard/issues</a>
 
 
 ## License
 
 MIT
-
-## Keywords
-
-`react`,`reactjs`,`digital-keyboard`,`on-screen`,`virtual-component`,`screen-keyboard`,`component`,`virtual-keyboard`,`touchscreen`,`touch-screen`,`kiosk`,`osk`, `js`, `3D Keyboard`
