@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 
 // Dynamically import keyboard with ssr:false — must be inside a 'use client' file
-const KeyboardApp = dynamic(
-  () => import('@/components/KeyboardApp').then((m) => ({ default: m.KeyboardApp })),
+const Keyboard3D = dynamic(
+  () => import('@/components/Keyboard3D').then((m) => ({ default: m.Keyboard3D })),
   { ssr: false }
 );
 
@@ -40,5 +40,5 @@ export function ClientKeyboard() {
   // After mount:  client renders the real keyboard (no server involved at this point).
   if (!mounted) return <HydrationPlaceholder />;
 
-  return <KeyboardApp />;
+  return <Keyboard3D />;
 }

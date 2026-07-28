@@ -1,11 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import type { DisplayScreenProps } from './types';
 import styles from './DisplayScreen.module.css';
-
-interface DisplayScreenProps {
-  value: string;
-}
 
 export function DisplayScreen({ value }: DisplayScreenProps) {
   const textAreaRef = useRef<HTMLDivElement>(null);

@@ -1,0 +1,17 @@
+# Ignore Next.js and app stuff
+app/
+hooks/
+public/
+next.config.mjs
+postcss.config.mjs
+tailwind.config.ts
+.eslintrc.json
+.next/
+test.ts
+test2.tsx
+implementation_plan.md
+task.md
+
+# Ignore all source components (since we ship dist)
+components/
+!components/index.ts

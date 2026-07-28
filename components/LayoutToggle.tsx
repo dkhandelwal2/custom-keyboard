@@ -1,12 +1,7 @@
 'use client';
 
+import type { LayoutType, LayoutToggleProps } from './types';
 import styles from './LayoutToggle.module.css';
-import type { LayoutType } from './Keyboard';
-
-interface LayoutToggleProps {
-  layout: LayoutType;
-  onToggle: (layout: LayoutType) => void;
-}
 
 export function LayoutToggle({ layout, onToggle }: LayoutToggleProps) {
   return (

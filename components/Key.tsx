@@ -3,20 +3,10 @@
 import { useState, useCallback, useRef } from 'react';
 import { useSoundEngine } from '@/hooks/useSoundEngine';
 import { useVibration } from '@/hooks/useVibration';
+import type { KeyProps } from './types';
 import styles from './Key.module.css';
 
-interface KeyProps {
-  label: string;
-  displayLabel?: React.ReactNode;
-  rowIndex: number;
-  width?: 'normal' | 'wide' | 'wider' | 'widest' | 'half';
-  accent?: boolean;
-  isActive?: boolean;   // for Caps / Shift active state
-  isDisabled?: boolean;
-  onKeyPress: (key: string) => void;
-}
-
-export function Key({ label, displayLabel, rowIndex, width = 'normal', accent = false, isActive = false, isDisabled = false, onKeyPress }: KeyProps) {
+export function Key({ label, displayLabel, rowIndex, width = 'normal', accent = false, isActive = false, isDisabled = false, enableSound = true, onKeyPress }: KeyProps) {
   const [pressed, setPressed] = useState(false);
   const [burst, setBurst] = useState(false);
   const { playClick } = useSoundEngine();
@@ -31,13 +21,15 @@ export function Key({ label, displayLabel, rowIndex, width = 'normal', accent = 
     }
     setPressed(true);
     setBurst(true);
-    playClick(label, rowIndex);
+    if (enableSound) {
+      playClick(label, rowIndex);
+    }
     vibrate(25);
     onKeyPress(label);
 
     if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
     pressTimerRef.current = setTimeout(() => setBurst(false), 400);
-  }, [label, rowIndex, playClick, vibrate, onKeyPress, isDisabled]);
+  }, [label, rowIndex, playClick, vibrate, onKeyPress, isDisabled, enableSound]);
 
   const handleRelease = useCallback(() => {
     setPressed(false);
