@@ -4,6 +4,11 @@ A stunning, interactive 3D keyboard component for React. Features real-time soun
 
 ![KeyBoard3D Demo](https://raw.githubusercontent.com/dkhandelwal2/custom-keyboard/main/app/opengraph-image.png)
 
+## Live Demo
+
+Try it out in your browser instantly!
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/dkhandelwal2/custom-keyboard)
+
 ## Installation
 
 Install the package via npm:
@@ -71,6 +76,21 @@ The `LayoutType` is exported from the package and supports the following literal
 - **Modifiers:** Supports Shift and Caps-Lock with intelligent auto-reverting shift behavior.
 - **Beautiful UI:** Glassmorphism, 3D shadows, and CSS animations built-in.
 
+## Documentation
+
+For installation guide, and usage examples, visit the [Documentation](https://dkhandelwal2.github.io/custom-keyboard/)
+
+## Contributing
+
+Contributions are always welcome! If you have a great idea or spot a bug, feel free to open an issue or submit a pull request: 
+
+https://github.com/dkhandelwal2/custom-keyboard/issues
+
+
 ## License
 
 MIT
+
+## Keywords
+
+`react`,`reactjs`,`digital-keyboard`,`on-screen`,`virtual-component`,`screen-keyboard`,`component`,`virtual-keyboard`,`touchscreen`,`touch-screen`,`kiosk`,`osk`, `js`, `3D Keyboard`
