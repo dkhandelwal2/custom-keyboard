@@ -8,7 +8,7 @@ export default defineConfig({
   clean: true,
   external: ['react', 'react-dom'],
   minify: true,
-  esbuildOptions(options) {
+  esbuildOptions(options: any) {
     options.jsx = 'automatic';
     options.plugins = options.plugins || [];
     options.plugins.unshift(cssModulesPlugin({ inject: false, localsConvention: 'camelCaseOnly' }));
