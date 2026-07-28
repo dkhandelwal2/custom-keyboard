@@ -131,7 +131,7 @@ export function Keyboard3D({
             <div className={styles.logoMark} aria-hidden="true">
               <span className={styles.logoIcon}>⌨</span>
             </div>
-            <div style={{ flex: 1 }}>
+            <div style={{ flex: 1, textAlign: 'left' }}>
               <h1 className={styles.title}>
                 {headerTitle}
                 {headerTitleAccent && <span className={styles.titleAccent}>{headerTitleAccent}</span>}

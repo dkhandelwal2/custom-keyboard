@@ -6,14 +6,21 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(140, 100, 255, 0.2);
   border-radius: 100px;
-  padding: 6px 6px 6px 10px;
+  padding: 6px 6px 6px 15px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  width: 100%;
+  width: auto;
+}
+
+@media (max-width: 767px) {
+  .toggleWrapper {
+    padding: 6px 6px 6px 10px;
+  }
 }
 
 .keypadTitle {
   font-size: small;
+  margin: 0px;
 }
 
 @media (max-width: 320px) {
@@ -51,7 +58,7 @@
 }
 
 .radioText {
-  font-family: 'Space Grotesk', sans-serif;
+
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;

@@ -81,7 +81,7 @@
 }
 
 .keyLabel {
-  font-family: 'Space Grotesk', sans-serif;
+
   font-size: clamp(12px, 3.2vw, 17px);
   font-weight: 700;
   color: #c8c0f0;
