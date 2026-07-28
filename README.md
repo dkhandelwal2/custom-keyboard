@@ -4,14 +4,12 @@ A stunning, interactive 3D keyboard component for React. Features real-time soun
 
 ![KeyBoard3D Demo](https://raw.githubusercontent.com/dkhandelwal2/custom-keyboard/main/app/opengraph-image.png)
 
-## Live Demo
+## 🟢 Live Demo
 
 Try it out in your browser instantly!
-<a href="https://stackblitz.com/github/dkhandelwal2/custom-keyboard" target="_blank">
-  <img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz" />
-</a>
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/dkhandelwal2/custom-keyboard)
 
-## Installation
+## 📥 Installation
 
 Install the package via npm:
 
@@ -21,7 +19,7 @@ npm install react-keyboard3d-dkhandelwal
 
 *Note: Since it's a React component, you'll need `react` and `react-dom` installed in your project.*
 
-## Quick Start
+## 🚀 Quick Start
 
 Import the component and its CSS file into your React/Next.js application.
 
@@ -45,7 +43,7 @@ export default function MyKeyboardApp() {
 }
 ```
 
-## Props Reference
+## 🏷️ Props Reference
 
 `Keyboard3D` supports both controlled and uncontrolled state management.
 
@@ -64,31 +62,31 @@ export default function MyKeyboardApp() {
 | `defaultEnableSound`| `boolean` | `true` | Initial sound state for uncontrolled usage. |
 | `onSoundToggle` | `(enabled: boolean) => void`| `undefined` | Callback fired when the sound toggle button is clicked. |
 
-## Layout Types
+## 🔢 Layout Types
 
 The `LayoutType` is exported from the package and supports the following literal strings:
 - `'abcd'` - A standard A-Z alphabetical layout.
 - `'qwerty'` - A standard QWERTY layout.
 - `'numeric'` - A number pad layout.
 
-## Features
+## 🎛 Features
 
 - **Controlled/Uncontrolled:** Use it as a drop-in uncontrolled component or hook it up to your own state.
 - **Haptic & Sound:** Automatically handles sound and vibration on mobile devices.
 - **Modifiers:** Supports Shift and Caps-Lock with intelligent auto-reverting shift behavior.
 - **Beautiful UI:** Glassmorphism, 3D shadows, and CSS animations built-in.
 
-## Documentation
+## 📖 Documentation
 
-For installation guide, and usage examples, visit the <a href="https://github.com/dkhandelwal2/custom-keyboard" target="_blank">Documentation</a>
+For installation guide, and usage examples, visit the [Documentation](https://github.com/dkhandelwal2/custom-keyboard)
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are always welcome! If you have a great idea or spot a bug, feel free to open an issue or submit a pull request: 
 
-<a href="https://github.com/dkhandelwal2/custom-keyboard/issues" target="_blank">https://github.com/dkhandelwal2/custom-keyboard/issues</a>
+[https://github.com/dkhandelwal2/custom-keyboard/issues](https://github.com/dkhandelwal2/custom-keyboard/issues)
 
 
-## License
+## 📄 License
 
 MIT
