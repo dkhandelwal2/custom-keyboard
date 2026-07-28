@@ -13,5 +13,5 @@ implementation_plan.md
 task.md
 
 # Ignore all source components (since we ship dist)
-components/
-!components/index.ts
+/components/
+!/components/index.ts

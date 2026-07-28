@@ -37,6 +37,9 @@
   "main": "./dist/components/index.js",
   "module": "./dist/components/index.mjs",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
