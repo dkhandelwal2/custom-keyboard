@@ -8,6 +8,7 @@ import type { Keyboard3DProps, LayoutType } from './types';
 import styles from './Keyboard3D.module.css';
 
 export function Keyboard3D({
+  className,
   value: controlledValue,
   defaultValue = '',
   onChange,
@@ -17,6 +18,12 @@ export function Keyboard3D({
   onLayoutChange,
   showDisplayScreen = true,
   showLayoutToggle = true,
+  showHeader = true,
+  showFooter = true,
+  headerTitle = 'KeyBoard',
+  headerTitleAccent = ' 3D',
+  headerSubtitle = 'Interactive · Animated · Immersive',
+  footerText = 'Tap keys to play sounds & feel vibration on mobile',
   enableSound,
   defaultEnableSound = true,
   onSoundToggle,
@@ -25,7 +32,7 @@ export function Keyboard3D({
   const [internalLayout, setInternalLayout] = useState<LayoutType>(defaultLayout);
   const [internalValue, setInternalValue] = useState(defaultValue);
   const [internalEnableSound, setInternalEnableSound] = useState(defaultEnableSound);
-  
+
   const [isCaps, setIsCaps] = useState(false);
   const [isShifted, setIsShifted] = useState(false);
 
@@ -111,7 +118,7 @@ export function Keyboard3D({
   }, [currentEnableSound, isControlledSound, onSoundToggle]);
 
   return (
-    <main className={styles.app}>
+    <main className={`${styles.app} ${className || ''}`.trim()}>
       {/* Animated background orbs */}
       <div className={styles.orb1} aria-hidden="true" />
       <div className={styles.orb2} aria-hidden="true" />
@@ -119,23 +126,28 @@ export function Keyboard3D({
 
       <div className={styles.container}>
         {/* Header */}
-        <header className={styles.header}>
-          <div className={styles.logoMark} aria-hidden="true">
-            <span className={styles.logoIcon}>⌨</span>
-          </div>
-          <div style={{ flex: 1 }}>
-            <h1 className={styles.title}>KeyBoard<span className={styles.titleAccent}> 3D</span></h1>
-            <p className={styles.subtitle}>Interactive · Animated · Immersive</p>
-          </div>
-          <button
-            className={styles.soundToggleBtn}
-            onClick={handleSoundToggle}
-            aria-label={currentEnableSound ? 'Mute sound' : 'Enable sound'}
-            title={currentEnableSound ? 'Mute sound' : 'Enable sound'}
-          >
-            {currentEnableSound ? '🔊' : '🔇'}
-          </button>
-        </header>
+        {showHeader && (
+          <header className={styles.header}>
+            <div className={styles.logoMark} aria-hidden="true">
+              <span className={styles.logoIcon}>⌨</span>
+            </div>
+            <div style={{ flex: 1 }}>
+              <h1 className={styles.title}>
+                {headerTitle}
+                {headerTitleAccent && <span className={styles.titleAccent}>{headerTitleAccent}</span>}
+              </h1>
+              <p className={styles.subtitle}>{headerSubtitle}</p>
+            </div>
+            <button
+              className={styles.soundToggleBtn}
+              onClick={handleSoundToggle}
+              aria-label={currentEnableSound ? 'Mute sound' : 'Enable sound'}
+              title={currentEnableSound ? 'Mute sound' : 'Enable sound'}
+            >
+              {currentEnableSound ? '🔊' : '🔇'}
+            </button>
+          </header>
+        )}
 
         {/* Layout toggle */}
         {showLayoutToggle && (
@@ -145,29 +157,6 @@ export function Keyboard3D({
         {/* Display screen */}
         {showDisplayScreen && (
           <DisplayScreen value={currentValue} />
-        )}
-
-        {/* Indicator row */}
-        {/* Caps/Shift indicators */}
-        {(isCaps || isShifted || currentValue.length > 0) && (
-          <div className={styles.toggleRow}>
-            <div className={styles.modifierContainer}>
-              <div className={styles.modifierBadges}>
-                {isCaps && <span className={styles.badge}>⇪ CAPS-LOCK ON</span>}
-                {isShifted && <span className={styles.badge}>⇧ SHIFT ON</span>}
-              </div>
-              {currentValue.length > 0 && (
-                <button
-                  className={styles.clearBtn}
-                  onClick={handleClear}
-                  aria-label="Clear text"
-                  id="clear-button"
-                >
-                  Clear All
-                </button>
-              )}
-            </div>
-          </div>
         )}
 
         {/* Keyboard */}
@@ -186,9 +175,32 @@ export function Keyboard3D({
           </div>
         </div>
 
-        <footer className={styles.footer}>
-          <p>Tap keys to play sounds &amp; feel vibration on mobile</p>
-        </footer>
+        {/* Indicator row */}
+        {/* Caps/Shift indicators */}
+        <div className={styles.toggleRow}>
+          <div className={styles.modifierContainer}>
+            <div className={styles.modifierBadges}>
+              {isCaps && <span className={styles.badge}>⇪ CAPS-LOCK ON</span>}
+              {isShifted && <span className={styles.badge}>⇧ SHIFT ON</span>}
+            </div>
+            {currentValue.length > 0 && (
+              <button
+                className={styles.clearBtn}
+                onClick={handleClear}
+                aria-label="Clear text"
+                id="clear-button"
+              >
+                Clear All
+              </button>
+            )}
+          </div>
+        </div>
+
+        {showFooter && (
+          <footer className={styles.footer}>
+            <p>{footerText}</p>
+          </footer>
+        )}
       </div>
     </main>
   );

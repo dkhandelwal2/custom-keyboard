@@ -3,6 +3,8 @@ import type { ReactNode } from 'react';
 export type LayoutType = 'qwerty' | 'abcd' | 'numeric';
 
 export interface Keyboard3DProps {
+  /** Optional custom CSS class for the outermost container */
+  className?: string;
   /** The current value of the typed text. If provided, the component acts as controlled. */
   value?: string;
   /** Initial text value for uncontrolled usage. */
@@ -17,10 +19,22 @@ export interface Keyboard3DProps {
   defaultLayout?: LayoutType;
   /** Callback fired when the layout changes. */
   onLayoutChange?: (layout: LayoutType) => void;
-  /** Whether to show the display screen. Defaults to true. */
+  /** Whether to show the top display screen (default: true) */
   showDisplayScreen?: boolean;
-  /** Whether to show the layout toggle buttons. Defaults to true. */
+  /** Whether to show the layout toggle buttons (default: true) */
   showLayoutToggle?: boolean;
+  /** Whether to show the header section (default: true) */
+  showHeader?: boolean;
+  /** Whether to show the footer section (default: true) */
+  showFooter?: boolean;
+  /** Custom header title content (default: 'KeyBoard') */
+  headerTitle?: ReactNode;
+  /** Custom header title accent part (default: ' 3D') */
+  headerTitleAccent?: ReactNode;
+  /** Custom header subtitle content */
+  headerSubtitle?: ReactNode;
+  /** Custom footer text content */
+  footerText?: ReactNode;
   /** Whether to play sound on key press. If provided, sound state is controlled. */
   enableSound?: boolean;
   /** Initial sound enabled state for uncontrolled usage. Defaults to true. */

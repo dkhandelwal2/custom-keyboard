@@ -49,6 +49,7 @@ export default function MyKeyboardApp() {
 
 | Prop | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
+| `className` | `string` | `undefined` | Optional custom CSS class for the outermost container. |
 | `value` | `string` | `undefined` | The current value of the typed text. If provided, the component acts as a **controlled** component. |
 | `defaultValue` | `string` | `""` | Initial text value for **uncontrolled** usage. |
 | `onChange` | `(value: string) => void` | `undefined` | Callback fired whenever the text value changes. |
@@ -58,6 +59,12 @@ export default function MyKeyboardApp() {
 | `onLayoutChange` | `(layout: LayoutType) => void`| `undefined` | Callback fired when the user switches the layout via the toggle buttons. |
 | `showDisplayScreen` | `boolean` | `true` | Whether to show the top display screen showing the typed text. |
 | `showLayoutToggle` | `boolean` | `true` | Whether to show the layout toggle buttons (ABC / QWERTY / 123). |
+| `showHeader` | `boolean` | `true` | Whether to show the header section with title and sound toggle. |
+| `showFooter` | `boolean` | `true` | Whether to show the footer section. |
+| `headerTitle` | `ReactNode` | `"KeyBoard"` | Custom header title content. |
+| `headerTitleAccent` | `ReactNode` | `" 3D"` | Custom accented text appended to the title. |
+| `headerSubtitle` | `ReactNode` | `"Interactive · Animated · Immersive"` | Custom header subtitle content. |
+| `footerText` | `ReactNode` | `"Tap keys to play sounds & feel vibration on mobile"` | Custom footer text content. |
 | `enableSound` | `boolean` | `undefined` | Whether to play sound on key press. If provided, sound state is controlled. |
 | `defaultEnableSound`| `boolean` | `true` | Initial sound state for uncontrolled usage. |
 | `onSoundToggle` | `(enabled: boolean) => void`| `undefined` | Callback fired when the sound toggle button is clicked. |

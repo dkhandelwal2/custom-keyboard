@@ -10,6 +10,12 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 320px) {
+  .app {
+    padding: 12px;
+  }
+}
+
 /* Animated background orbs */
 .orb1,
 .orb2,
@@ -82,9 +88,9 @@
   gap: 16px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 320px) {
   .container {
-    height: 100dvh;
+    gap: 8px;
   }
 }
 
@@ -152,6 +158,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 28px;
 }
 
 .modifierBadges {
@@ -261,6 +268,19 @@
 
 .footer {
   text-align: center;
+  position: fixed;
+  bottom: 0px;
+  padding: 16px;
+  left: 50%;
+  transform: translate(-50%, 0px);
+  width: 100%;
+  z-index: -1;
+}
+
+@media (max-width: 320px) {
+  .footer {
+    padding: 12px;
+  }
 }
 
 .footer p {
@@ -270,6 +290,7 @@
   letter-spacing: 0.05em;
   margin: 0;
 }
+
 /* Sound Toggle Button */
 .soundToggleBtn {
   background: rgba(255, 255, 255, 0.05);
