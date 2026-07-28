@@ -1,26 +1,25 @@
 .toggleWrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  gap: 4px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(140, 100, 255, 0.2);
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 100px;
+  padding: 6px 6px 6px 10px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   width: 100%;
 }
 
-@media (max-width: 320px) {
-  .toggleWrapper {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 2px;
-  }
-}
-
 .keypadTitle {
   font-size: small;
+}
+
+@media (max-width: 320px) {
+  .keypadTitle {
+    font-size: x-small;
+  }
 }
 
 .radioGroup {
@@ -29,7 +28,6 @@
   background: rgba(100, 60, 200, 0.15);
   border-radius: 100px;
   border: 1px solid rgba(140, 100, 255, 0.3);
-  padding: 2px;
   position: relative;
 }
 
