@@ -57,8 +57,8 @@ function resolveDisplay(key: string, isUpperCase: boolean, isShifted: boolean = 
   // Nudge logic for Hindi keys
   if (layout === 'hindi' && !isShifted && SHIFT_SYMBOLS[key]) {
     return (
-      <span style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%' }}>
-        <span style={{ position: 'absolute', top: '2px', right: '2px', fontSize: '0.6em', opacity: 0.5 }}>
+      <span className={styles.nudgeContainer}>
+        <span className={styles.nudge}>
           {SHIFT_SYMBOLS[key]}
         </span>
         <span>{displayChar}</span>
