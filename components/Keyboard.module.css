@@ -36,22 +36,41 @@
 }
 
 .emojiSearch {
-  width: auto;
-  padding: 8px 12px;
+  width: 36px;
+  height: 36px;
+  padding: 8px 12px 8px 36px;
   border-radius: 100px;
-  background: #ffffff0a;
-  border: 1px solid #8c64ff33;
-  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(140, 100, 255, 0.2);
+  color: transparent;
   font-size: 14px;
   outline: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c8b4ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.3-4.3'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px;
 }
 
 .emojiSearch::placeholder {
-  color: #c8b4ff73;
+  color: transparent;
+  transition: color 0.3s ease;
 }
 
-.emojiSearch:focus {
-  border-color: rgba(0, 245, 255, 0.5);
+.emojiSearch:focus,
+.emojiSearch:not(:placeholder-shown) {
+  width: 160px;
+  color: #fff;
+  cursor: text;
+  background-position: left 12px center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(0, 245, 255, 0.4);
+  box-shadow: 0 0 10px rgba(0, 245, 255, 0.1);
+}
+
+.emojiSearch:focus::placeholder {
+  color: rgba(200, 180, 255, 0.45);
 }
 
 .emojiCategories {
@@ -59,10 +78,11 @@
   overflow-x: auto;
   gap: 6px;
   padding-bottom: 4px;
+  scrollbar-width: 0px;
 }
 
 .emojiCategories::-webkit-scrollbar {
-  height: 4px;
+  display: none;
 }
 
 .emojiCategories::-webkit-scrollbar-thumb {
