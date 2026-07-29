@@ -27,10 +27,20 @@ const SPECIAL_KEY_CONFIG: SoundConfig = {
 
 export function useSoundEngine() {
   const audioCtxRef = useRef<AudioContext | null>(null);
+  const noiseBufferRef = useRef<AudioBuffer | null>(null);
 
   const getAudioCtx = useCallback((): AudioContext => {
     if (!audioCtxRef.current || audioCtxRef.current.state === 'closed') {
-      audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      audioCtxRef.current = ctx;
+      
+      // Precompute noise buffer once to prevent main thread blocking on keystrokes
+      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.03, ctx.sampleRate);
+      const noiseData = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < noiseData.length; i++) {
+        noiseData[i] = (Math.random() * 2 - 1) * 0.15;
+      }
+      noiseBufferRef.current = noiseBuffer;
     }
     if (audioCtxRef.current.state === 'suspended') {
       audioCtxRef.current.resume();
@@ -64,20 +74,17 @@ export function useSoundEngine() {
       gainNode.gain.exponentialRampToValueAtTime(0.001, now + config.duration);
 
       // Noise click layer for realism
-      const noiseBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.03, ctx.sampleRate);
-      const noiseData = noiseBuffer.getChannelData(0);
-      for (let i = 0; i < noiseData.length; i++) {
-        noiseData[i] = (Math.random() * 2 - 1) * 0.15;
+      if (noiseBufferRef.current) {
+        const noiseSource = ctx.createBufferSource();
+        noiseSource.buffer = noiseBufferRef.current;
+        const noiseGain = ctx.createGain();
+        noiseGain.gain.setValueAtTime(0.2, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+        noiseSource.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+        noiseSource.start(now);
+        noiseSource.stop(now + 0.03);
       }
-      const noiseSource = ctx.createBufferSource();
-      noiseSource.buffer = noiseBuffer;
-      const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.2, now);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-      noiseSource.connect(noiseGain);
-      noiseGain.connect(ctx.destination);
-      noiseSource.start(now);
-      noiseSource.stop(now + 0.03);
 
       // Connect and play
       oscillator.connect(gainNode);

@@ -217,3 +217,18 @@
       translate(-50%, -50%) rotate(calc(var(--i) * 60deg)) translateX(20px) scale(0);
   }
 }
+
+@media (max-width: 767px) {
+  .particleBurst {
+    display: none; /* Huge performance win on mobile */
+  }
+  
+  .pressed .keyFace, .active .keyFace, .accent.pressed .keyFace {
+    box-shadow: none; /* Disable expensive box shadows on mobile */
+  }
+  
+  .keyFace {
+    box-shadow: none;
+    border: 1px solid rgba(100, 80, 220, 0.2);
+  }
+}

@@ -26,6 +26,7 @@
   pointer-events: none;
   z-index: 0;
   animation: orbFloat linear infinite;
+  will-change: transform;
 }
 
 .orb1 {
@@ -54,6 +55,14 @@
   top: 40%;
   left: 30%;
   animation-duration: 28s;
+}
+
+@media (max-width: 767px) {
+  .orb1,
+  .orb2,
+  .orb3 {
+    display: none; /* Huge performance gain on mobile */
+  }
 }
 
 @keyframes orbFloat {
@@ -270,6 +279,18 @@
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
     inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 767px) {
+  .keyboardPanel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgb(15, 12, 35); /* Solid fallback for performance */
+  }
+  .keyboardGlow {
+    animation: none;
+    opacity: 0.8;
+  }
 }
 
 .footer {
