@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import type { DisplayScreenProps } from './types';
+import type { DisplayScreenProps } from '../types/types';
 import styles from './DisplayScreen.module.css';
 
 export function DisplayScreen({ value }: DisplayScreenProps) {

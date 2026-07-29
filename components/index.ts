@@ -3,4 +3,4 @@ export { Keyboard } from './Keyboard';
 export { LayoutToggle } from './LayoutToggle';
 export { DisplayScreen } from './DisplayScreen';
 export { Key } from './Key';
-export type * from './types';
+export type * from '../types/types';

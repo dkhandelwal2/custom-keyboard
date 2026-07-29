@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 4px;
+  gap: 12px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(140, 100, 255, 0.2);
   border-radius: 100px;
@@ -14,7 +14,9 @@
 
 @media (max-width: 767px) {
   .toggleWrapper {
-    padding: 6px 6px 6px 10px;
+    flex-direction: column;
+    padding: 12px;
+    border-radius: 12px;
   }
 }
 
@@ -25,7 +27,7 @@
 
 @media (max-width: 320px) {
   .keypadTitle {
-    font-size: 9px;
+    font-size: x-small;
   }
 }
 
@@ -36,6 +38,16 @@
   border-radius: 100px;
   border: 1px solid rgba(140, 100, 255, 0.3);
   position: relative;
+}
+
+@media (max-width: 767px) {
+  .radioGroup {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    border-radius: 10px;
+    border: none;
+    padding: 8px;
+  }
 }
 
 .radioLabel {
@@ -59,8 +71,7 @@
 }
 
 .radioText {
-
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
   color: rgba(200, 180, 255, 0.5);

@@ -1,11 +1,114 @@
 .keyboard {
   display: flex;
   flex-direction: column;
-  align-items: stretch;     /* rows stretch full width */
+  align-items: stretch;
+  /* rows stretch full width */
   gap: 4px;
   padding: 12px 8px 18px;
   width: 100%;
   box-sizing: border-box;
+  height: calc(5 * clamp(36px, 9vw, 50px) + 46px);
+}
+
+.emojiScrollContainer {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.emojiToolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  gap: 8px;
+  padding: 0px 0px 8px 0px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+  position: sticky;
+  top: 0;
+  background: rgba(10, 15, 30, 0.95);
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.emojiSearch {
+  width: auto;
+  padding: 8px 12px;
+  border-radius: 100px;
+  background: #ffffff0a;
+  border: 1px solid #8c64ff33;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+}
+
+.emojiSearch::placeholder {
+  color: #c8b4ff73;
+}
+
+.emojiSearch:focus {
+  border-color: rgba(0, 245, 255, 0.5);
+}
+
+.emojiCategories {
+  display: flex;
+  overflow-x: auto;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.emojiCategories::-webkit-scrollbar {
+  height: 4px;
+}
+
+.emojiCategories::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.emojiCategories button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid transparent;
+  color: #ccc;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 16px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.emojiCategories button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.emojiCategories button.activeCategory {
+  background: rgba(0, 245, 255, 0.2);
+  color: #00f5ff;
+  border-color: rgba(0, 245, 255, 0.4);
+}
+
+/* Custom scrollbar for emoji keyboard */
+.emojiScrollContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.emojiScrollContainer::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.emojiScrollContainer::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.emojiScrollContainer::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .row {
@@ -13,9 +116,14 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 3px;                 /* uniform gap between every key */
+  gap: 3px;
   width: 100%;
   box-sizing: border-box;
+}
+
+.emojiRow {
+  content-visibility: auto;
+  contain-intrinsic-size: 50px;
 }
 
 .nudgeContainer {
@@ -33,4 +141,22 @@
   right: 2px;
   font-size: 0.6em;
   opacity: 0.5;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 32px 16px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  font-size: 14px;
+}
+
+.emptyStateIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.8;
 }

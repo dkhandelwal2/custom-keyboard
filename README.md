@@ -1,4 +1,4 @@
-# KeyBoard3D ⌨️
+# ⌨️ React KeyBoard-3D
 
 A stunning, interactive 3D keyboard component for React. Features real-time sound synthesis, haptic vibration feedback, multiple layouts (QWERTY, A–Z, Numeric), and a mobile-first premium design.
 
@@ -54,7 +54,7 @@ export default function MyKeyboardApp() {
 | `defaultValue` | `string` | `""` | Initial text value for **uncontrolled** usage. |
 | `onChange` | `(value: string) => void` | `undefined` | Callback fired whenever the text value changes. |
 | `onKeyPress` | `(key: string) => void` | `undefined` | Callback fired for every individual key press (including modifiers). |
-| `layout` | `LayoutType` | `undefined` | The current keyboard layout (`'abcd'`, `'qwerty'`, `'numeric'`, `'hindi'`). If provided, layout state is controlled. |
+| `layout` | `LayoutType` | `undefined` | The current keyboard layout (`'abcd'`, `'qwerty'`, `'numeric'`, `'hindi'`, `'phonetic-hindi'`). If provided, layout state is controlled. |
 | `defaultLayout` | `LayoutType` | `'qwerty'` | Initial layout for uncontrolled usage. |
 | `onLayoutChange` | `(layout: LayoutType) => void`| `undefined` | Callback fired when the user switches the layout via the toggle buttons. |
 | `showDisplayScreen` | `boolean` | `true` | Whether to show the top display screen showing the typed text. |
@@ -72,16 +72,21 @@ export default function MyKeyboardApp() {
 ## 🔢 Layout Types
 
 The `LayoutType` is exported from the package and supports the following literal strings:
-- `'abcd'` - A standard A-Z alphabetical layout.
 - `'qwerty'` - A standard QWERTY layout.
+- `'abcd'` - A standard A-Z alphabetical layout.
+- `'hindi'` - A native Hindi (Devanagari) layout.
+- `'phonetic-hindi'` - A phonetic English-to-Hindi transliteration layout powered by Google Input Tools.
 - `'numeric'` - A number pad layout.
+- `'emoji'` - A full emoji keyboard with categories and search functionality.
 
 ## 🎛 Features
 
 - **Controlled/Uncontrolled:** Use it as a drop-in uncontrolled component or hook it up to your own state.
 - **Haptic & Sound:** Automatically handles sound and vibration on mobile devices.
 - **Modifiers:** Supports Shift and Caps-Lock with intelligent auto-reverting shift behavior.
-- **Beautiful UI:** Glassmorphism, 3D shadows, and CSS animations built-in.
+- **Phonetic Transliteration:** Type in English and automatically convert to Hindi in real-time (`phonetic-hindi` layout).
+- **Emoji Picker:** Fully integrated emoji keyboard with skin-tone deduplication, categorized tabs, and a fast search bar.
+- **Beautiful UI:** Glassmorphism, 3D shadows, fluid dropdowns, and CSS animations built-in.
 
 ## 📖 Documentation
 

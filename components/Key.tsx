@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef } from 'react';
 import { useSoundEngine } from '@/hooks/useSoundEngine';
 import { useVibration } from '@/hooks/useVibration';
-import type { KeyProps } from './types';
+import type { KeyProps } from '../types/types';
 import styles from './Key.module.css';
 
 export function Key({ label, displayLabel, rowIndex, width = 'normal', accent = false, isActive = false, isDisabled = false, enableSound = true, onKeyPress }: KeyProps) {

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type LayoutType = 'qwerty' | 'abcd' | 'numeric' | 'hindi';
+export type LayoutType = 'qwerty' | 'abcd' | 'numeric' | 'hindi' | 'phonetic-hindi' | 'emoji';
 
 export interface Keyboard3DProps {
   /** Optional custom CSS class for the outermost container */

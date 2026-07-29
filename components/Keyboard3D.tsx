@@ -1,11 +1,31 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { Keyboard } from './Keyboard';
 import { LayoutToggle } from './LayoutToggle';
 import { DisplayScreen } from './DisplayScreen';
-import type { Keyboard3DProps, LayoutType } from './types';
+import { transliterate } from '../utils/transliterate';
+import type { Keyboard3DProps, LayoutType } from '../types/types';
 import styles from './Keyboard3D.module.css';
+
+/**
+ * Safely removes the last user-perceived character (grapheme cluster).
+ * Essential for emojis so they aren't split into broken surrogate pairs.
+ */
+function safeBackspace(str: string): string {
+  if (!str) return '';
+  try {
+    const segmenter = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+    const segments = Array.from(segmenter.segment(str));
+    segments.pop();
+    return segments.map(s => s.segment).join('');
+  } catch {
+    // Fallback for environments without Intl.Segmenter
+    const chars = Array.from(str);
+    chars.pop();
+    return chars.join('');
+  }
+}
 
 export function Keyboard3D({
   className,
@@ -23,7 +43,7 @@ export function Keyboard3D({
   headerTitle = 'KeyBoard',
   headerTitleAccent = ' 3D',
   headerSubtitle = 'Interactive · Animated · Immersive',
-  footerText = 'Tap keys to play sounds & feel vibration on mobile',
+  footerText = 'Made with ❤️ in India.',
   enableSound,
   defaultEnableSound = true,
   onSoundToggle,
@@ -36,6 +56,9 @@ export function Keyboard3D({
   const [isCaps, setIsCaps] = useState(false);
   const [isShifted, setIsShifted] = useState(false);
 
+  // Buffer to track the English word currently being typed in phonetic layout
+  const [phoneticBuffer, setPhoneticBuffer] = useState('');
+
   const isControlledValue = controlledValue !== undefined;
   const isControlledLayout = controlledLayout !== undefined;
   const isControlledSound = enableSound !== undefined;
@@ -43,6 +66,11 @@ export function Keyboard3D({
   const currentLayout = isControlledLayout ? controlledLayout : internalLayout;
   const currentValue = isControlledValue ? controlledValue : internalValue;
   const currentEnableSound = isControlledSound ? enableSound : internalEnableSound;
+
+  const currentValueRef = useRef(currentValue);
+  useEffect(() => {
+    currentValueRef.current = currentValue;
+  }, [currentValue]);
 
   // isUpperCase: Caps XOR Shift (mirrors real keyboard behaviour)
   const isUpperCase = isCaps !== isShifted;
@@ -63,26 +91,69 @@ export function Keyboard3D({
     let newValue = currentValue;
 
     // ── Utility keys ─────────────────────────────────────────
-    if (key === 'Backspace' || key === '⌫') {
-      newValue = currentValue.slice(0, -1);
-    } else if (key === 'Enter' || key === '⏎') {
-      newValue = currentValue + '\n';
-    } else if (key === 'Space' || key === '') {
-      newValue = currentValue + ' ';
-    } else if (key === 'Tab' || key === '⇥') {
-      newValue = currentValue + '  ';
-    } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
-      // ── Letter keys — apply current case ─────────────────────
-      const upper = isCaps !== isShifted;
-      const char = upper ? key.toUpperCase() : key.toLowerCase();
-      newValue = currentValue + char;
-      // Shift is momentary — reset after one character
-      if (isShifted) setIsShifted(false);
+    if (currentLayout === 'phonetic-hindi') {
+      if (key === 'Backspace' || key === '⌫') {
+        newValue = safeBackspace(currentValue);
+        setPhoneticBuffer(prev => safeBackspace(prev));
+      } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
+        const upper = isCaps !== isShifted;
+        const char = upper ? key.toUpperCase() : key.toLowerCase();
+        newValue = currentValue + char;
+        setPhoneticBuffer(prev => prev + char);
+        if (isShifted) setIsShifted(false);
+      } else {
+        // Space, Enter, or non-letters commit the word and trigger transliteration
+        const wordToConvert = phoneticBuffer;
+        setPhoneticBuffer('');
+
+        let appendChar = key;
+        if (key === 'Enter' || key === '⏎') appendChar = '\n';
+        else if (key === 'Space' || key === '') appendChar = ' ';
+        else if (key === 'Tab' || key === '⇥') appendChar = '  ';
+
+        newValue = currentValue + appendChar;
+        if (isShifted && key.length === 1) setIsShifted(false);
+
+        // Async Transliteration
+        if (wordToConvert.length > 0) {
+          transliterate(wordToConvert).then(hindiWord => {
+            if (hindiWord !== wordToConvert) {
+              const currentLatest = currentValueRef.current;
+              const lastIndex = currentLatest.lastIndexOf(wordToConvert);
+              if (lastIndex !== -1) {
+                const nextValue = currentLatest.slice(0, lastIndex) + hindiWord + currentLatest.slice(lastIndex + wordToConvert.length);
+                if (!isControlledValue) {
+                  setInternalValue(nextValue);
+                }
+                onChange?.(nextValue);
+              }
+            }
+          });
+        }
+      }
     } else {
-      // ── Everything else (numbers, symbols) ───────────────────
-      newValue = currentValue + key;
-      // Shift is momentary — reset after one character
-      if (isShifted && key.length === 1) setIsShifted(false);
+      // ── Standard Key Handling ────────────────────────────────
+      if (key === 'Backspace' || key === '⌫') {
+        newValue = safeBackspace(currentValue);
+      } else if (key === 'Enter' || key === '⏎') {
+        newValue = currentValue + '\n';
+      } else if (key === 'Space' || key === '') {
+        newValue = currentValue + ' ';
+      } else if (key === 'Tab' || key === '⇥') {
+        newValue = currentValue + '  ';
+      } else if (key.length === 1 && /[a-zA-Z]/.test(key)) {
+        // ── Letter keys — apply current case ─────────────────────
+        const upper = isCaps !== isShifted;
+        const char = upper ? key.toUpperCase() : key.toLowerCase();
+        newValue = currentValue + char;
+        // Shift is momentary — reset after one character
+        if (isShifted) setIsShifted(false);
+      } else {
+        // ── Everything else (numbers, symbols) ───────────────────
+        newValue = currentValue + key;
+        // Shift is momentary — reset after one character
+        if (isShifted && key.length === 1) setIsShifted(false);
+      }
     }
 
     if (!isControlledValue) {
@@ -90,16 +161,26 @@ export function Keyboard3D({
     }
     onChange?.(newValue);
 
-  }, [currentValue, isCaps, isShifted, isControlledValue, onChange, onKeyPress]);
+  }, [
+    currentValue,
+    currentLayout,
+    phoneticBuffer,
+    isCaps,
+    isShifted,
+    isControlledValue,
+    onChange,
+    onKeyPress
+  ]);
 
   const handleLayoutToggle = useCallback((newLayout: LayoutType) => {
     if (!isControlledLayout) {
       setInternalLayout(newLayout);
     }
     onLayoutChange?.(newLayout);
-    // Reset modifier state when switching layouts
+    // Reset modifier and buffer state when switching layouts
     setIsCaps(false);
     setIsShifted(false);
+    setPhoneticBuffer('');
   }, [isControlledLayout, onLayoutChange]);
 
   const handleClear = useCallback(() => {
@@ -182,6 +263,9 @@ export function Keyboard3D({
             <div className={styles.modifierBadges}>
               {isCaps && <span className={styles.badge}>⇪ CAPS-LOCK ON</span>}
               {isShifted && <span className={styles.badge}>⇧ SHIFT ON</span>}
+              {currentLayout === 'phonetic-hindi' && phoneticBuffer.length > 0 && (
+                <span className={`${styles.badge} ${styles.phoneticBadge}`}>Press Space to translate "{phoneticBuffer}"</span>
+              )}
             </div>
             {currentValue.length > 0 && (
               <button
