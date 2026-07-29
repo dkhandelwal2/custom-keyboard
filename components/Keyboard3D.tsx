@@ -67,15 +67,45 @@ export function Keyboard3D({
   const currentValue = isControlledValue ? controlledValue : internalValue;
   const currentEnableSound = isControlledSound ? enableSound : internalEnableSound;
 
-  const currentValueRef = useRef(currentValue);
+  const stateRef = useRef({
+    currentValue,
+    currentLayout,
+    phoneticBuffer,
+    isCaps,
+    isShifted,
+    isControlledValue,
+    onChange,
+    onKeyPress
+  });
+
   useEffect(() => {
-    currentValueRef.current = currentValue;
-  }, [currentValue]);
+    stateRef.current = {
+      currentValue,
+      currentLayout,
+      phoneticBuffer,
+      isCaps,
+      isShifted,
+      isControlledValue,
+      onChange,
+      onKeyPress
+    };
+  });
 
   // isUpperCase: Caps XOR Shift (mirrors real keyboard behaviour)
   const isUpperCase = isCaps !== isShifted;
 
   const handleKeyPress = useCallback((key: string) => {
+    const {
+      currentValue,
+      currentLayout,
+      phoneticBuffer,
+      isCaps,
+      isShifted,
+      isControlledValue,
+      onChange,
+      onKeyPress
+    } = stateRef.current;
+
     onKeyPress?.(key);
 
     // ── Modifier keys ────────────────────────────────────────
@@ -118,14 +148,14 @@ export function Keyboard3D({
         if (wordToConvert.length > 0) {
           transliterate(wordToConvert).then(hindiWord => {
             if (hindiWord !== wordToConvert) {
-              const currentLatest = currentValueRef.current;
+              const currentLatest = stateRef.current.currentValue;
               const lastIndex = currentLatest.lastIndexOf(wordToConvert);
               if (lastIndex !== -1) {
                 const nextValue = currentLatest.slice(0, lastIndex) + hindiWord + currentLatest.slice(lastIndex + wordToConvert.length);
-                if (!isControlledValue) {
+                if (!stateRef.current.isControlledValue) {
                   setInternalValue(nextValue);
                 }
-                onChange?.(nextValue);
+                stateRef.current.onChange?.(nextValue);
               }
             }
           });
@@ -161,16 +191,7 @@ export function Keyboard3D({
     }
     onChange?.(newValue);
 
-  }, [
-    currentValue,
-    currentLayout,
-    phoneticBuffer,
-    isCaps,
-    isShifted,
-    isControlledValue,
-    onChange,
-    onKeyPress
-  ]);
+  }, []);
 
   const handleLayoutToggle = useCallback((newLayout: LayoutType) => {
     if (!isControlledLayout) {
@@ -251,7 +272,7 @@ export function Keyboard3D({
               isShifted={isShifted}
               enableSound={currentEnableSound}
               onKeyPress={handleKeyPress}
-              typedTextLength={currentValue.length}
+              isTextEmpty={currentValue.length === 0}
             />
           </div>
         </div>

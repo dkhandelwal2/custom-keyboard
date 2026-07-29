@@ -25,8 +25,8 @@ const LAYOUT_ARIA_MAP: Record<LayoutType, string> = {
   emoji: 'Emoji',
 };
 
-export function Keyboard(props: KeyboardProps) {
-  const { layout, isUpperCase, isCaps, isShifted, enableSound = true, onKeyPress, typedTextLength } = props;
+export const Keyboard = React.memo(function Keyboard(props: KeyboardProps) {
+  const { layout, isUpperCase, isCaps, isShifted, enableSound = true, onKeyPress, isTextEmpty } = props;
   const isQwertyLike = layout === 'qwerty' || layout === 'phonetic-hindi';
   const isStandard = isQwertyLike || layout === 'hindi';
 
@@ -72,9 +72,8 @@ export function Keyboard(props: KeyboardProps) {
           );
         })}
 
-        {/* ── Standard trailing modifier keys (QWERTY & Hindi) ──────── */}
         {isStandard && rowIndex === 1 && (
-          <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={typedTextLength === 0} />
+          <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={isTextEmpty} />
         )}
         {isStandard && rowIndex === 2 && (
           <Key label="Enter" displayLabel={resolveDisplay('Enter', isUpperCase, false, layout)} rowIndex={rowIndex} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} />
@@ -101,7 +100,7 @@ export function Keyboard(props: KeyboardProps) {
       {/* ── Bottom row — common to all layouts ──── */}
       <div className={styles.row}>
         {!isStandard && (
-          <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase, false, layout)} rowIndex={rows.length} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={typedTextLength === 0} />
+          <Key label="Backspace" displayLabel={resolveDisplay('Backspace', isUpperCase, false, layout)} rowIndex={rows.length} width="wider" accent enableSound={enableSound} onKeyPress={onKeyPress} isDisabled={isTextEmpty} />
         )}
         <Key label="Space" displayLabel={resolveDisplay('Space', isUpperCase, false, layout)} rowIndex={rows.length} width="widest" enableSound={enableSound} onKeyPress={onKeyPress} />
         {!isStandard && (
@@ -110,4 +109,4 @@ export function Keyboard(props: KeyboardProps) {
       </div>
     </div>
   );
-}
+});

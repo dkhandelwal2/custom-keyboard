@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Key } from './Key';
 import type { KeyboardProps } from '../types/types';
 import { FULL_EMOJIS } from '../data/emoji-data';
@@ -18,7 +18,7 @@ const CATEGORY_ICONS: Record<string, string> = {
   'Flags': '🏁'
 };
 
-export function EmojiKeyboard({ layout, isUpperCase, isCaps, isShifted, enableSound = true, onKeyPress }: KeyboardProps) {
+export const EmojiKeyboard = React.memo(function EmojiKeyboard({ layout, isUpperCase, isCaps, isShifted, enableSound = true, onKeyPress }: KeyboardProps) {
   const [emojiSearch, setEmojiSearch] = useState('');
   const [emojiCategory, setEmojiCategory] = useState<string | null>(null);
 
@@ -117,4 +117,4 @@ export function EmojiKeyboard({ layout, isUpperCase, isCaps, isShifted, enableSo
       </div>
     </>
   );
-}
+});

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useSoundEngine } from '@/hooks/useSoundEngine';
 import { useVibration } from '@/hooks/useVibration';
 import type { KeyProps } from '../types/types';
 import styles from './Key.module.css';
 
-export function Key({ label, displayLabel, rowIndex, width = 'normal', accent = false, isActive = false, isDisabled = false, enableSound = true, onKeyPress }: KeyProps) {
+export const Key = React.memo(function Key({ label, displayLabel, rowIndex, width = 'normal', accent = false, isActive = false, isDisabled = false, enableSound = true, onKeyPress }: KeyProps) {
   const [pressed, setPressed] = useState(false);
   const [burst, setBurst] = useState(false);
   const { playClick } = useSoundEngine();
@@ -65,4 +65,4 @@ export function Key({ label, displayLabel, rowIndex, width = 'normal', accent = 
       )}
     </button>
   );
-}
+});

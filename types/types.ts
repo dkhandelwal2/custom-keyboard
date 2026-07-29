@@ -49,7 +49,7 @@ export interface KeyboardProps {
   isCaps: boolean;
   isShifted: boolean;
   onKeyPress: (key: string) => void;
-  typedTextLength?: number;
+  isTextEmpty?: boolean;
   enableSound?: boolean;
 }
 
